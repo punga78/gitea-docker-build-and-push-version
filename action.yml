@@ -1,0 +1,25 @@
+name: 'Build and Push Docker Image versioned by package.json and build-info.json'
+description: 'Builds and pushes a Docker image to a Docker registry'
+inputs:
+  username:
+    description: 'Username per il Docker registry'
+    required: true
+  password:
+    description: 'Password per il Docker registry'
+    required: true
+  path:
+    description: 'Percorso alla directory di contesto per Docker'
+    required: false
+    default: '.'
+  registry:
+    description: 'Registry Docker'
+    required: true
+  owner:
+    description: 'Proprietario del repository'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/index.cjs'
+boxbranding:
+  color: "red"
+  icon: "box"
