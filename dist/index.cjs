@@ -63154,8 +63154,13 @@ function run() {
 
         // Leggi le configurazioni dagli input di GitHub Actions
         const registry = core.getInput("registry", { required: true });
+        const npm_token = core.getInput("npm_token", { required: false });
         const owner = core.getInput("owner", { required: true });
+
+        const argToken = npm_token ? `--build-arg NPM_TOKEN=${npm_token}` : '';
+
         log(`Registry: ${registry}`);
+        log(`npm_token: ${argToken}`);
         log(`Owner: ${owner}`);
 
         // Controlla se esiste package.json
@@ -63252,7 +63257,7 @@ function run() {
 
         // Esegui i passaggi
         try {
-            executeCommand(`docker buildx build -t ${fullImageNameLatest} "${contextPath}"`);
+            executeCommand(`docker buildx build -t ${fullImageNameLatest} ${argToken} "${contextPath}"`);
         } catch (error) {
             exit("Failed to complete docker operations.");
         }
